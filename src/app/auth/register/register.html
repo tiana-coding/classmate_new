@@ -1,0 +1,31 @@
+<div class="register-page container">
+  <div class="text-center mb-4">
+    <div class="classmate-logo">CLASS <span>MATE</span></div>
+    <h2 class="hero-text">Registrieren</h2>
+  </div>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="bg-white p-4 rounded shadow register-form">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" id="name" class="form-control" formControlName="name" placeholder="Dein Name" />
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">E-Mail:</label>
+      <input type="email" id="email" class="form-control" formControlName="email" placeholder="E-Mail" />
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Passwort:</label>
+      <input type="password" id="password" class="form-control" formControlName="password" placeholder="Passwort" />
+    </div>
+
+    <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">
+      Registrieren
+    </button>
+
+    <div class="text-center mt-3">
+      <a routerLink="/auth/login" class="text-white">Schon registriert? Zum Login</a>
+    </div>
+  </form>
+</div>
