@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from './models/task.model';
 import { TasksService } from './services/tasks.service';
 import { AuthService } from './services/auth.service';
-import { UserService } from '../../user/services/user.service';
+import { UserService } from '../user/services/user.service';
 
 @Component({
   selector: 'app-tasks',
