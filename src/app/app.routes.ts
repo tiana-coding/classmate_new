@@ -5,6 +5,7 @@ import { AgendaComponent } from './agenda/agenda';
 import { LeaderboardComponent } from './leaderboard/leaderboard';
 import { ForumComponent } from './forum/forum';
 import { FeedbackComponent } from './feedback/feedback';
+import { GamificationComponent } from './gamification/gamification';
 
 
 export const routes: Routes = [
@@ -14,6 +15,8 @@ export const routes: Routes = [
   { path: 'forum', component: ForumComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'feedback', component: FeedbackComponent },
+  { path: 'feedback', component: FeedbackComponent },
+  { path: 'gamification', component: GamificationComponent },
   {
     path: 'auth',
     loadChildren: () =>
