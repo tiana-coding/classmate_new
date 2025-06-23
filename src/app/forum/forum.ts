@@ -36,6 +36,18 @@ export class ForumComponent {
     }
   }
 
+  searchTerm = '';
+
+  get filteredPosts(): ForumPost[] {
+  if (!this.searchTerm.trim()) return this.posts;
+  const lower = this.searchTerm.toLowerCase();
+
+  return this.posts.filter(post =>
+    post.title.toLowerCase().includes(lower) ||
+    post.tags.some(tag => tag.toLowerCase().includes(lower))
+  );
+}
+
   getFullImageUrl(path: string): string {
     return `http://localhost:3000${path}`;
   }
