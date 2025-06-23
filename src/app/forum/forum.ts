@@ -1,3 +1,15 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-forum',
+  imports: [],
+  templateUrl: './forum.html',
+  styleUrl: './forum.css'
+})
+export class Forum {
+
+}
+
 console.log('🔧 forum.module geladen');
 
 declare const bootstrap: any;
@@ -130,3 +142,4 @@ function escapeHtml(str: string): string {
     return chars[tag] || tag;
   });
 }
+
