@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { Task } from './models/task.model';
 import { TasksService } from './services/tasks.service';
 import { AuthService } from './services/auth.service';
-import { UserService } from '../../user/services/user.service';
+import { UserService } from '../user/services/user.service';
+
+import { TaskListComponent } from './components/task-list/task-list.component';
+import { TaskStatsComponent } from './components/task-stats.component'; 
 
 @Component({
   selector: 'app-tasks',
-  templateUrl: './tasks.component.html'
+  standalone: true,
+  imports: [CommonModule, FormsModule, TaskListComponent, TaskStatsComponent],
+  templateUrl: './tasks.component.html',
 })
 export class TasksComponent implements OnInit {
   classes = ['L1','L2','L3','L4'];

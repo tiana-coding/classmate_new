@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Task } from '../../models/task.model.js';
 import { AuthService } from '../../services/auth.service.js';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-task-item',
-  templateUrl: './task-item.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './task-item.component.html'
 })
 export class TaskItemComponent {
   @Input() task!: Task;

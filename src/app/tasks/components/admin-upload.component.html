@@ -1,10 +1,12 @@
 <div class="px-4 py-3" [formGroup]="taskForm">
   <h3>Admin: Aufgaben verwalten</h3>
 
+  <!-- Aufgabenliste -->
   <div *ngFor="let t of tasks" class="card mb-2 p-2">
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <strong>{{ t.title }}</strong> ({{ t.class }}) - {{ t.points }}p - <small>{{ t.dueDate }}</small>
+        <strong>{{ t.title }}</strong> ({{ t.class }}) – {{ t.points }}p – 
+        <small>{{ t.dueDate }}</small>
       </div>
       <div>
         <button class="btn btn-sm btn-outline-primary me-2" (click)="edit(t)">Bearbeiten</button>
@@ -13,34 +15,55 @@
     </div>
   </div>
 
+  <!-- Formular -->
   <div class="mt-4">
     <h4>{{ editTask ? 'Aufgabe bearbeiten' : 'Neue Aufgabe erstellen' }}</h4>
     <div class="row g-2">
+      <!-- Klasse -->
       <div class="col-md-2">
-        <label class="form-label">Klasse</label>
-        <select formControlName="class" class="form-select">
+        <label for="classSelect" class="form-label">Klasse</label>
+        <select id="classSelect" formControlName="class" class="form-select" title="Wähle die Zielklasse">
           <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
         </select>
       </div>
+
+      <!-- Titel -->
       <div class="col-md-4">
-        <label class="form-label">Titel</label>
-        <input formControlName="title" type="text" class="form-control" placeholder="Titel">
+        <label for="titleInput" class="form-label">Titel</label>
+        <input id="titleInput" formControlName="title" type="text" class="form-control"
+          [ngClass]="{ 'is-invalid': taskForm.get('title')?.invalid && taskForm.get('title')?.touched }"
+          placeholder="Titel der Aufgabe" title="Gib einen Titel ein">
       </div>
+
+      <!-- Fälligkeitsdatum -->
       <div class="col-md-2">
-        <label class="form-label">Fällig</label>
-        <input formControlName="dueDate" type="date" class="form-control">
+        <label for="dueDateInput" class="form-label">Fällig</label>
+        <input id="dueDateInput" formControlName="dueDate" type="date" class="form-control"
+          [ngClass]="{ 'is-invalid': taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched }"
+          placeholder="z. B. 2025-06-30" title="Wähle ein Fälligkeitsdatum aus">
       </div>
+
+      <!-- Punkte -->
       <div class="col-md-1">
-        <label class="form-label">Punkte</label>
-        <input formControlName="points" type="number" class="form-control" min="0">
+        <label for="pointsInput" class="form-label">Punkte</label>
+        <input id="pointsInput" formControlName="points" type="number" class="form-control" min="0"
+          [ngClass]="{ 'is-invalid': taskForm.get('points')?.invalid && taskForm.get('points')?.touched }"
+          placeholder="z. B. 10" title="Anzahl der erreichbaren Punkte">
       </div>
+
+      <!-- Links -->
       <div class="col-md-3">
-        <label class="form-label">PDF-Pfad</label>
-        <input formControlName="documentUrl" type="text" class="form-control" placeholder="docs/Aufgaben/..."><br>
-        <label class="form-label">Externer Link</label>
-        <input formControlName="externalUrl" type="text" class="form-control" placeholder="https://...">
+        <label for="docUrlInput" class="form-label">PDF-Pfad</label>
+        <input id="docUrlInput" formControlName="documentUrl" type="text" class="form-control"
+          placeholder="docs/Aufgaben/..." title="Pfad zur PDF-Datei">
+
+        <label for="externalUrlInput" class="form-label mt-2">Externer Link</label>
+        <input id="externalUrlInput" formControlName="externalUrl" type="text" class="form-control"
+          placeholder="https://..." title="Externer Link zur Aufgabe">
       </div>
     </div>
+
+    <!-- Buttons -->
     <div class="mt-3">
       <button class="btn btn-success me-2" (click)="save()" [disabled]="taskForm.invalid">
         {{ editTask ? 'Aktualisieren' : 'Erstellen' }}

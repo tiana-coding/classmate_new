@@ -1,0 +1,113 @@
+[
+  {
+    "username": "admin",
+    "password": "AdminPass!23",
+    "email": "admin@schule.de",
+    "name": "Administrator",
+    "class": "10A",
+    "totalPoints": 0,
+    "badges": [],
+    "isAdmin": true
+  },
+  {
+    "username": "anna.schmidt",
+    "password": "Student01!",
+    "email": "anna.schmidt@schule.de",
+    "name": "Anna Schmidt",
+    "class": "10A",
+    "totalPoints": 120,
+    "badges": ["star"],
+    "isAdmin": false
+  },
+  {
+    "username": "ben.mueller",
+    "password": "Student02!",
+    "email": "ben.mueller@schule.de",
+    "name": "Ben Müller",
+    "class": "10A",
+    "totalPoints": 200,
+    "badges": [],
+    "isAdmin": false
+  },
+  {
+    "username": "clara.fischer",
+    "password": "Student03!",
+    "email": "clara.fischer@schule.de",
+    "name": "Clara Fischer",
+    "class": "10A",
+    "totalPoints": 150,
+    "badges": ["star", "helper"],
+    "isAdmin": false
+  },
+  {
+    "username": "david.weber",
+    "password": "Student04!",
+    "email": "david.weber@schule.de",
+    "name": "David Weber",
+    "class": "10A",
+    "totalPoints": 90,
+    "badges": [],
+    "isAdmin": false
+  },
+  {
+    "username": "eva.becker",
+    "password": "Student05!",
+    "email": "eva.becker@schule.de",
+    "name": "Eva Becker",
+    "class": "10A",
+    "totalPoints": 300,
+    "badges": ["star"],
+    "isAdmin": false
+  },
+  {
+    "username": "felix.hoffmann",
+    "password": "Student06!",
+    "email": "felix.hoffmann@schule.de",
+    "name": "Felix Hoffmann",
+    "class": "10A",
+    "totalPoints": 0,
+    "badges": [],
+    "isAdmin": false
+  },
+  {
+    "username": "greta.bauer",
+    "password": "Student07!",
+    "email": "greta.bauer@schule.de",
+    "name": "Greta Bauer",
+    "class": "10A",
+    "totalPoints": 50,
+    "badges": [],
+    "isAdmin": false
+  },
+  {
+    "username": "hanna.wagner",
+    "password": "Student08!",
+    "email": "hanna.wagner@schule.de",
+    "name": "Hanna Wagner",
+    "class": "10A",
+    "totalPoints": 400,
+    "badges": ["pro"],
+    "isAdmin": false
+  },
+  {
+    "username": "ian.schulz",
+    "password": "Student09!",
+    "email": "ian.schulz@schule.de",
+    "name": "Ian Schulz",
+    "class": "10A",
+    "totalPoints": 80,
+    "badges": [],
+    "isAdmin": false
+  },
+  {
+    "username": "julia.klein",
+    "password": "Student10!",
+    "email": "julia.klein@schule.de",
+    "name": "Julia Klein",
+    "class": "10A",
+    "totalPoints": 250,
+    "badges": ["star", "top10"],
+    "isAdmin": false
+  }
+]
+
