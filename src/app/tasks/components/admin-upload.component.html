@@ -17,22 +17,25 @@
     <h4>{{ editTask ? 'Aufgabe bearbeiten' : 'Neue Aufgabe erstellen' }}</h4>
     <div class="row g-2">
       <div class="col-md-2">
-        <label class="form-label">Klasse</label>
-        <select formControlName="class" class="form-select">
+        <label for="classSelect"    class="form-label">Klasse</label>
+        <select id="classSelect" formControlName="class" class="form-select">
           <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
         </select>
       </div>
       <div class="col-md-4">
-        <label class="form-label">Titel</label>
-        <input formControlName="title" type="text" class="form-control" placeholder="Titel">
+        <label for="titleInput"class="form-label">Titel</label>
+        <input id=="titleInput" formControlName="title" type="text" class="form-control" [ngClass]="{ 'is-invalid': taskForm.get('title')?.invalid && taskForm.get('title')?.touched }"
+  placeholder="Titel">
       </div>
       <div class="col-md-2">
-        <label class="form-label">Fällig</label>
-        <input formControlName="dueDate" type="date" class="form-control">
+        <label for="dueDateInput"class="form-label">Fällig</label>
+        <input id= "dueDateInput" formControlName="dueDate" type="date" class="form-control"
+        [ngClass]="{ 'is-invalid': taskForm.get('points')?.invalid && taskForm.get('points')?.touched }" placeholder="z. B. 2025-06-30"
+        title="Wähle ein Fälligkeitsdatum aus">
       </div>
       <div class="col-md-1">
         <label class="form-label">Punkte</label>
-        <input formControlName="points" type="number" class="form-control" min="0">
+        <input formControlName="points" type="number" class="form-control" min="0" [ngClass]="{ 'is-invalid': taskForm.get('points')?.invalid && taskForm.get('points')?.touched }" placeholder="z. B. 10">
       </div>
       <div class="col-md-3">
         <label class="form-label">PDF-Pfad</label>
