@@ -1,0 +1,53 @@
+<div *ngIf="submitted" class="alert alert-success">✅ Danke für dein Feedback!</div>
+<div *ngIf="error" class="alert alert-danger">❌ Fehler beim Senden.</div>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card bg-white">
+        <div class="card-body">
+          <h2 class="card-title mb-4">Feedback geben</h2>
+
+          <form (ngSubmit)="submitFeedback()" #form="ngForm">
+            <!-- Stern-Rating -->
+            <div class="mb-3">
+              <label class="form-label">Bewertung</label>
+              <div class="d-flex gap-2">
+                <label *ngFor="let star of [1,2,3,4,5]">
+                  <input
+                    type="radio"
+                    name="rating"
+                    [value]="star"
+                    [(ngModel)]="rating"
+                    required
+                  />
+                  {{ '⭐'.repeat(star) }}
+                </label>
+              </div>
+            </div>
+
+            <!-- Freitext -->
+            <div class="mb-3">
+              <label for="feedbackText" class="form-label">Dein Feedback</label>
+              <textarea
+                id="feedbackText"
+                name="feedbackText"
+                class="form-control"
+                rows="4"
+                placeholder="Beschreibe hier dein Feedback..."
+                [(ngModel)]="feedbackText"
+                required
+              ></textarea>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning">
+                <i class="bi bi-send"></i> Feedback senden
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
