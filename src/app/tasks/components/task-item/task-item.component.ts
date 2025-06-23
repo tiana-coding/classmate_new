@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service.js';
 
 @Component({
   selector: 'app-task-item',
+  standalone: true,
   templateUrl: './task-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
