@@ -1,17 +1,35 @@
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
+const path = require('path'); // <- muss vor Verwendung kommen
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const multer = require('multer');
+
+const uploadFolder = path.join(__dirname, 'src', 'assets', 'images', 'uploads');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadFolder),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
+});
+
+const upload = multer({ storage });
 
 const app = express();
 const port = 3000;
 
-const feedbackPath = path.join(__dirname, 'src', 'assets', 'json', 'feedback.json');
 
+// 🧠 JSON-Parsing und Größenlimit (für base64-Bilder)
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 
+// 📁 Pfade zu JSON-Dateien
+app.use('/assets/images/uploads', express.static(path.join(__dirname, 'src', 'assets', 'images', 'uploads')));
+const feedbackPath = path.join(__dirname, 'src', 'assets', 'json', 'feedback.json');
+const postsPath = path.join(__dirname, 'src', 'assets', 'json', 'posts.json');
+
+
+// 📮 Feedback POST
 app.post('/api/feedback', (req, res) => {
   try {
     const feedbackEntry = {
@@ -22,20 +40,18 @@ app.post('/api/feedback', (req, res) => {
 
     const raw = fs.readFileSync(feedbackPath, 'utf-8');
     const current = JSON.parse(raw);
-
     current.push(feedbackEntry);
 
     fs.writeFileSync(feedbackPath, JSON.stringify(current, null, 2), 'utf-8');
-
     res.status(200).json({ success: true });
-  } catch (error) {
-    console.error('❌ Fehler beim Speichern:', error);
-    res.status(500).json({ error: 'Fehler beim Speichern von Feedback' });
+  } catch (err) {
+    console.error('❌ Fehler beim Speichern des Posts:', err);
+    console.error('Request body war:', req.body);
+    res.status(500).json({ error: 'Fehler beim Speichern des Posts' });
   }
 });
 
-// Forum 
-// Neuer POST-Endpunkt
+// 📮 Forum POST
 app.post('/api/posts', (req, res) => {
   try {
     const post = {
@@ -49,32 +65,41 @@ app.post('/api/posts', (req, res) => {
       comments: []
     };
 
-    const raw = fs.readFileSync('src/assets/json/posts.json', 'utf-8');
+    const raw = fs.readFileSync(postsPath, 'utf-8');
     const current = JSON.parse(raw);
-
     current.push(post);
-    fs.writeFileSync('src/assets/json/posts.json', JSON.stringify(current, null, 2), 'utf-8');
 
+    fs.writeFileSync(postsPath, JSON.stringify(current, null, 2), 'utf-8');
     res.status(200).json({ success: true });
   } catch (err) {
-    console.error('Fehler beim Speichern:', err);
+    console.error('❌ Fehler beim Speichern des Posts:', err);
+    console.error('📦 Request-Body war:', req.body); // <-- wichtig
     res.status(500).json({ error: 'Fehler beim Speichern des Posts' });
   }
 });
 
-// Neuer GET-Endpunkt
+// 📄 Forum GET
 app.get('/api/posts', (req, res) => {
   try {
-    const raw = fs.readFileSync('src/assets/json/posts.json', 'utf-8');
+    const raw = fs.readFileSync(postsPath, 'utf-8');
     const data = JSON.parse(raw);
     res.status(200).json(data);
   } catch (err) {
-    console.error('Fehler beim Laden:', err);
+    console.error('❌ Fehler beim Laden der Posts:', err);
     res.status(500).json({ error: 'Fehler beim Laden der Posts' });
   }
 });
 
+app.post('/api/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'Kein Bild hochgeladen' });
+  }
 
+  const relativePath = `/assets/images/uploads/${req.file.filename}`; 
+  res.status(200).json({ imageUrl: relativePath });
+});
+
+// 🟢 Server starten
 app.listen(port, () => {
   console.log(`✅ Server läuft auf http://localhost:${port}`);
 });

@@ -1,63 +1,66 @@
-<div class="container py-4">
-  <!-- Header + Button -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-white">Forum</h1>
-    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#newQuestionModal">
-      <i class="bi bi-plus-circle"></i> Neue Frage stellen
+<div class="container py-5">
+  <h2 class="text-center mb-4">Forum</h2>
+
+  <div *ngIf="error" class="alert alert-danger text-center">
+    ❌ Fehler beim Absenden.
+  </div>
+  <div *ngIf="submitted" class="alert alert-success text-center">
+    ✅ Beitrag erfolgreich erstellt!
+  </div>
+
+  <div class="text-end mb-3 mx-5, px-1">
+    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#questionModal" style="margin-right: 215px;">
+      ➕ Neue Frage stellen
     </button>
   </div>
 
-  <!-- Erfolgs-/Fehlermeldung -->
-  <div *ngIf="submitted" class="alert alert-success">✅ Beitrag erfolgreich gepostet!</div>
-  <div *ngIf="error" class="alert alert-danger">❌ Fehler beim Absenden.</div>
-
-  <!-- Fragenliste -->
-  <div class="row g-4">
-    <div class="col-md-6" *ngFor="let post of posts">
-      <div class="card shadow-sm h-100">
+  <div class="row">
+    <div class="col-12 col-md-8 mx-auto" *ngFor="let post of posts">
+      <div class="card shadow-lg h-100 p-3 mb-4">
         <div class="card-body">
           <h5 class="card-title">{{ post.title }}</h5>
           <p class="card-text">{{ post.details }}</p>
+          <img *ngIf="post.imageUrl" [src]="'http://localhost:3000' + post.imageUrl" class="img-fluid rounded mb-2" />
           <p class="text-muted small mb-1">📅 {{ post.createdAt | date:'short' }}</p>
-          <p class="small text-secondary">
-            <span *ngIf="post.tags && post.tags.length > 0">🏷️ {{ post.tags.join(', ') }}</span>
-          </p>
+          <span *ngIf="post.tags && post.tags.length > 0">🏷️ {{ post.tags.join(', ') }}</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal: Neue Frage -->
-<div class="modal fade" id="newQuestionModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content text-dark">
-      <form (ngSubmit)="submitPost()">
-        <div class="modal-header">
-          <h5 class="modal-title">Neue Frage stellen</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-
-        <div class="modal-body">
+<!-- Modal -->
+<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Neue Frage stellen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="submitPost()">
           <div class="mb-3">
-            <label for="questionTitle" class="form-label">Titel</label>
-            <input type="text" class="form-control" id="questionTitle" [(ngModel)]="title" name="title" required>
+            <label for="title" class="form-label">Titel</label>
+            <input [(ngModel)]="title" name="title" type="text" class="form-control" id="title" required />
           </div>
           <div class="mb-3">
-            <label for="questionDetails" class="form-label">Details</label>
-            <textarea class="form-control" id="questionDetails" [(ngModel)]="details" name="details" rows="4" required></textarea>
+            <label for="details" class="form-label">Details</label>
+            <textarea [(ngModel)]="details" name="details" class="form-control" id="details" rows="4" required></textarea>
           </div>
           <div class="mb-3">
-            <label for="questionTags" class="form-label">Tags</label>
-            <input type="text" class="form-control" id="questionTags" [(ngModel)]="tags" name="tags">
+            <label for="tags" class="form-label">Tags (durch Kommas trennen)</label>
+            <input [(ngModel)]="tags" name="tags" type="text" class="form-control" id="tags" />
           </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
-          <button type="submit" class="btn btn-warning">Frage stellen</button>
-        </div>
-      </form>
+          <div class="mb-3">
+            <label for="questionImage" class="form-label">Bild (optional)</label>
+            <input type="file" class="form-control" id="questionImage" (change)="onFileSelected($event)" accept="image/*" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+            <button type="submit" class="btn btn-warning">Frage stellen</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
