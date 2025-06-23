@@ -6,6 +6,8 @@ import { LeaderboardComponent } from './leaderboard/leaderboard';
 import { ForumComponent } from './forum/forum';
 import { FeedbackComponent } from './feedback/feedback';
 import { GamificationComponent } from './gamification/gamification';
+import { ProfileComponent } from './profile/profile';
+import { EditProfileComponent } from './edit-profile/edit-profile';
 
 
 export const routes: Routes = [
@@ -15,8 +17,9 @@ export const routes: Routes = [
   { path: 'forum', component: ForumComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'feedback', component: FeedbackComponent },
-  { path: 'feedback', component: FeedbackComponent },
   { path: 'gamification', component: GamificationComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'edit-profile', component: EditProfileComponent },
   {
     path: 'auth',
     loadChildren: () =>
