@@ -9,13 +9,21 @@ import { UserService } from '../user/services/user.service';
 
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskStatsComponent } from './components/task-stats.component'; 
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [CommonModule, FormsModule, TaskListComponent, TaskStatsComponent],
   templateUrl: './tasks.component.html',
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,           
+    TaskListComponent,
+    TaskStatsComponent
+  ]
 })
+
 export class TasksComponent implements OnInit {
   classes = ['L1','L2','L3','L4'];
   selectedClass = 'L1';

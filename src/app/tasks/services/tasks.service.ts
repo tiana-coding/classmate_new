@@ -6,7 +6,7 @@ import { Task } from '../models/task.model';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
-  private staticUrl = 'assets/tasks/tasks.json';
+  private staticUrl = 'assets/json/tasks.json';
   private dataKey = 'tasksData';
 
   constructor(private http: HttpClient) {}
