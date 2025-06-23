@@ -4,6 +4,8 @@ import { DashboardComponent } from './dashboard/dashboard';
 import { AgendaComponent } from './agenda/agenda';
 import { LeaderboardComponent } from './leaderboard/leaderboard';
 import { ForumComponent } from './forum/forum';
+import { FeedbackComponent } from './feedback/feedback';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -11,6 +13,7 @@ export const routes: Routes = [
   { path: 'leaderboard', component: LeaderboardComponent },
   { path: 'forum', component: ForumComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'feedback', component: FeedbackComponent },
   {
     path: 'auth',
     loadChildren: () =>
