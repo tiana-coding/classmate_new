@@ -127,6 +127,69 @@ app.get('/api/gamification/leaderboard', (req, res) => {
   });
 });
 
+// ❤️ Like hinzufügen
+app.post('/api/posts/like/:id', (req, res) => {
+  const postId = Number(req.params.id);
+  const raw = fs.readFileSync(postsPath, 'utf-8');
+  const posts = JSON.parse(raw);
+
+  const post = posts.find(p => p.id === postId);
+  if (post) {
+    post.likes = (post.likes || 0) + 1;
+    fs.writeFileSync(postsPath, JSON.stringify(posts, null, 2), 'utf-8');
+    res.status(200).json({ success: true });
+  } else {
+    res.status(404).json({ error: 'Post nicht gefunden' });
+  }
+});
+
+// 💬 Kommentar hinzufügen
+app.post('/api/posts/comment/:id', (req, res) => {
+  const postId = Number(req.params.id);
+  const { comment } = req.body;
+  const raw = fs.readFileSync(postsPath, 'utf-8');
+  const posts = JSON.parse(raw);
+
+  const post = posts.find(p => p.id === postId);
+  if (post) {
+    post.comments = post.comments || [];
+    post.comments.push({
+      text: comment,
+      createdAt: new Date().toISOString()
+    });
+    fs.writeFileSync(postsPath, JSON.stringify(posts, null, 2), 'utf-8');
+    res.status(200).json({ success: true });
+  } else {
+    res.status(404).json({ error: 'Post nicht gefunden' });
+  }
+});
+
+app.post('/api/posts/:id/comment', (req, res) => {
+  const postId = Number(req.params.id);
+  const { text, createdAt } = req.body;
+
+  try {
+    const raw = fs.readFileSync(postsPath, 'utf-8');
+    const posts = JSON.parse(raw);
+
+    const post = posts.find(p => p.id === postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post nicht gefunden' });
+    }
+
+    post.comments = post.comments || [];
+    post.comments.push({ text, createdAt });
+
+    fs.writeFileSync(postsPath, JSON.stringify(posts, null, 2), 'utf-8');
+    res.status(200).json(post);
+  } catch (err) {
+    console.error('Fehler beim Speichern des Kommentars:', err);
+    res.status(500).json({ error: 'Interner Fehler beim Speichern' });
+  }
+});
+
+
+
 // 🟢 Server starten
 app.listen(port, () => {
   console.log(`✅ Server läuft auf http://localhost:${port}`);

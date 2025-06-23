@@ -10,7 +10,8 @@ interface ForumPost {
   imageUrl: string | null;
   createdAt: string;
   likes: number;
-  comments: any[];
+  comments: { text: string; createdAt: string }[];  
+  newComment?: string; 
 }
 
 @Component({
@@ -53,14 +54,50 @@ export class ForumComponent {
   }
 
   ngOnInit() {
-  fetch('http://localhost:3000/api/posts') 
+  fetch('http://localhost:3000/api/posts')
     .then(res => res.json())
-    .then(data => this.posts = data.reverse())
+    .then(data => {
+      this.posts = data.reverse().map((p: ForumPost) => ({
+        ...p,
+        newComment: ''  // für das Input-Feld im Template
+      }));
+    })
     .catch(err => {
       console.error('Fehler beim Laden:', err);
       this.error = true;
     });
 }
+
+    async likePost(postId: number) {
+      const res = await fetch(`http://localhost:3000/api/posts/like/${postId}`, {
+        method: 'POST'
+      });
+      if (res.ok) this.ngOnInit();
+    }
+
+    submitComment(postId: number, commentText: string) {
+  const newComment = {
+    text: commentText,
+    createdAt: new Date().toISOString()
+  };
+
+  fetch(`http://localhost:3000/api/posts/${postId}/comment`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newComment)
+  })
+    .then(res => res.json())
+    .then(updatedPost => {
+      // Kommentarliste aktualisieren (lokal)
+      const post = this.posts.find(p => p.id === postId);
+      if (post) {
+        post.comments.push(newComment);
+        post.newComment = '';
+      }
+    })
+    .catch(err => console.error('❌ Kommentarfehler:', err));
+}
+
 
   async submitPost() {
     let imageUrl = null;
