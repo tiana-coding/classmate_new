@@ -1,0 +1,68 @@
+<div class="calendar-component container mt-4">
+
+  <!-- View Controls (optional) -->
+  <div class="calendar-controls d-flex justify-content-between align-items-center mb-3">
+    <div class="btn-group" role="group" aria-label="Calendar View">
+      <button type="button" class="btn btn-outline-warning" data-view="customDay">
+        <i class="bi bi-calendar-day"></i> Day
+      </button>
+      <button type="button" class="btn btn-outline-warning" data-view="custom3Day">
+        <i class="bi bi-calendar3"></i> 3 Days
+      </button>
+      <button type="button" class="btn btn-outline-warning" data-view="customWeek">
+        <i class="bi bi-calendar-week"></i> Week
+      </button>
+    </div>
+    <button id="refreshCalendar" class="btn btn-light" title="Refresh">
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
+  </div>
+
+  <!-- Calendar Placeholder -->
+  <div class="calendar-container mb-4">
+    <div id="calendar" class="compact-calendar border rounded p-4 bg-light text-muted text-center">
+      (Calendar view to be integrated)
+    </div>
+  </div>
+
+  <!-- Add New Event Form -->
+  <form class="row g-3 mb-4" (ngSubmit)="add()">
+    <div class="col-md-6">
+      <input
+        type="text"
+        [(ngModel)]="newEvent.title"
+        name="title"
+        placeholder="Event title"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="col-md-4">
+      <input
+        type="date"
+        [(ngModel)]="newEvent.date"
+        name="date"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-warning w-100">Add</button>
+    </div>
+  </form>
+
+  <!-- List of Events -->
+  <ul class="list-group">
+    <li
+      *ngFor="let event of events; let i = index"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <strong>{{ event.title }}</strong><br />
+        <small>{{ event.date }}</small>
+      </div>
+      <button class="btn btn-sm btn-danger" (click)="deleteEvent(i)">Delete</button>
+    </li>
+  </ul>
+
+</div>
