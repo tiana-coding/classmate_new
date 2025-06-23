@@ -1,0 +1,55 @@
+<div class="container py-5">
+  <h2 class="mb-4">Profil bearbeiten</h2>
+  <form (ngSubmit)="onSubmit()" class="row g-4" #editProfileForm="ngForm">
+    <!-- Sidebar-like section for avatar and metadata -->
+    <div class="col-lg-4">
+      <div class="card p-4 bg-white text-center">
+        <i class="bi bi-person-circle profile-avatar text-secondary"></i>
+        <label for="avatarInput" class="d-block mt-2 text-primary" style="cursor:pointer;">Foto auswählen</label>
+        <input type="file" id="avatarInput" name="avatar" class="d-none" accept="image/*">
+        <p class="mt-3 text-muted small">Max. 160×160px, JPG/PNG</p>
+      </div>
+    </div>
+
+    <!-- Form fields -->
+    <div class="col-lg-8">
+      <div class="card p-4 bg-white">
+        <!-- Profile Details -->
+        <div class="mb-4">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" id="username" placeholder="if24xxxx" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Vollständiger Name</label>
+          <input type="text" name="fullName" class="form-control" id="fullName" placeholder="Max Mustermann">
+        </div>
+        <div class="mb-4">
+          <label class="form-label">E-Mail</label>
+          <input type="email" name="email" class="form-control" id="email" placeholder="if24xxxx@technikum-wien.at">
+        </div>
+
+        <div class="mb-4 pt-4 border-top">
+          <h5 class="section-title">Passwort ändern</h5>
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label">Aktuelles Passwort</label>
+            <input type="password" name="currentPassword" class="form-control" id="currentPassword" placeholder="********" required>
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">Neues Passwort</label>
+            <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="********" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Neues Passwort wiederholen</label>
+            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="********" required>
+          </div>
+        </div>
+
+        <!-- Save/Cancel -->
+        <div class="d-flex justify-content-between mt-4">
+          <a routerLink="/profile" class="nav-link">Abbrechen</a>
+          <button type="submit" class="btn btn-warning">Änderungen speichern</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
