@@ -7,12 +7,14 @@ import { TasksService } from './services/tasks.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from '../user/services/user.service';
 
+import { TaskListComponent } from './components/task-list/task-list.component';
+import { TaskStatsComponent } from './components/task-stats.component'; 
+
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TaskListComponent, TaskStatsComponent],
   templateUrl: './tasks.component.html',
-  
 })
 export class TasksComponent implements OnInit {
   classes = ['L1','L2','L3','L4'];

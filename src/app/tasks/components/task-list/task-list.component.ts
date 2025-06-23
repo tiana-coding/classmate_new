@@ -4,9 +4,9 @@ import { TaskItemComponent } from '../task-item/task-item.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-task-item',
+  selector: 'app-task-list',
   standalone: true,
-  templateUrl: './task-item.component.html',
+  templateUrl: './task-list.component.html',
   imports: [CommonModule, TaskItemComponent]
 })
 export class TaskListComponent {
