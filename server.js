@@ -99,6 +99,34 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
   res.status(200).json({ imageUrl: relativePath });
 });
 
+// 📊 Leaderboard GET
+app.get('/api/gamification/leaderboard', (req, res) => {
+  const usersPath = path.join(__dirname, 'src', 'assets', 'json', 'user.json');
+
+  fs.readFile(usersPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('❌ Fehler beim Lesen der user.json:', err);
+      return res.status(500).json({ error: 'Fehler beim Laden der Nutzerdaten' });
+    }
+
+    try {
+      const allUsers = JSON.parse(data);
+      const leaderboard = allUsers
+        .filter(user => !user.isAdmin)
+        .map(user => ({
+          name: user.name,
+          points: user.totalPoints
+        }))
+        .sort((a, b) => b.points - a.points);
+
+      res.json(leaderboard);
+    } catch (parseError) {
+      console.error('❌ Fehler beim Parsen der user.json:', parseError);
+      res.status(500).json({ error: 'Fehler beim Parsen der Nutzerdaten' });
+    }
+  });
+});
+
 // 🟢 Server starten
 app.listen(port, () => {
   console.log(`✅ Server läuft auf http://localhost:${port}`);

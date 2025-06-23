@@ -1,44 +1,60 @@
 <div class="container py-4">
-  <div class="row">
-    <!-- Linke Spalte: Fortschritt -->
-    <div class="col-md-6 mb-4">
-      <div class="card bg-white text-center h-100">
-        <div class="card-body">
-          <h5 class="card-title">Level-Fortschritt</h5>
-          <h6 class="mb-3">Level {{ currentLevel }}</h6>
+  <div class="row align-items-stretch">
+  <!-- Linke Spalte: Fortschritt + Aktivitäten -->
+<div class="col-md-6 mb-4 d-flex flex-column">
+  <div class="card bg-white text-center mb-3">
+    <div class="card-body">
+      <h5 class="card-title">Level-Fortschritt</h5>
+      <h6 class="mb-3">Level {{ currentLevel }}</h6>
 
-          <div class="progress" style="height: 28px;">
-            <div
-              class="progress-bar bg-warning text-dark fw-bold d-flex align-items-center justify-content-center"
-              [style.width.%]="progressPercent">
-              {{ progressPercent }}%
-            </div>
-          </div>
-
-          <small class="text-muted d-block mt-2">
-            Noch {{ pointsToNextLevel }} Punkte bis Level {{ nextLevel }}
-          </small>
+      <div class="progress mx-auto" style="height: 28px; width: 75%;">
+        <div
+          class="progress-bar bg-warning text-dark fw-bold d-flex align-items-center justify-content-center"
+          [style.width.%]="progressPercent">
+          {{ progressPercent }}%
         </div>
       </div>
-    </div>
 
-    <!-- Rechte Spalte: Rangliste -->
-    <div class="col-md-6 mb-4">
-      <div class="card bg-white h-100">
-        <div class="card-body">
-          <h5 class="card-title">Rangliste</h5>
-          <ol class="list-group">
-            <li
-              *ngFor="let user of leaderboard; index as i"
-              class="list-group-item d-flex justify-content-between align-items-center">
-              <span><strong>{{ i + 1 }}.</strong> {{ user.name }}</span>
-              <span class="badge bg-primary rounded-pill">{{ user.points }} XP</span>
-            </li>
-          </ol>
-        </div>
+      <small class="text-muted d-block mt-2">
+        Noch {{ pointsToNextLevel }} Punkte bis Level {{ nextLevel }}
+      </small>
+    </div>
+  </div>
+
+  <!-- Aktivitäten-Log -->
+  <div class="card bg-white flex-grow-1">
+    <div class="card-body">
+      <h5 class="card-title">🕒 Letzte Aktivitäten</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">+10 XP für gelöste Aufgabe</li>
+        <li class="list-group-item">🎯 Neues Abzeichen: Newcomer</li>
+        <li class="list-group-item">📅 Erste Aufgabe hochgeladen</li>
+        <li class="list-group-item">💬 Im Forum kommentiert</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Rechte Spalte: Rangliste -->
+  <div class="col-md-6 mb-4 d-flex h-100">
+    <div class="card bg-white w-100 h-100">
+      <div class="card-body">
+        <h4>🏆 Rangliste</h4>
+        <ul class="list-group" *ngIf="leaderboard.length > 0; else loading">
+          <li *ngFor="let user of leaderboard; index as i" class="list-group-item d-flex justify-content-between align-items-center">
+            <span><strong>{{ i + 1 }}.</strong> {{ user.name }}</span>
+            <span class="badge bg-primary rounded-pill">{{ user.points }} XP</span>
+          </li>
+        </ul>
+        <ng-template #loading>
+          <p>Lade Rangliste...</p>
+        </ng-template>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Achievements -->
   <div class="row">
