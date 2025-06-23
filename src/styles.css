@@ -370,9 +370,9 @@ section {
     height: auto;
     object-fit: contain;
     transition: transform 0.2s ease-in-out;
-  }
+}
   .badge-image:hover {
     transform: scale(1.05);
-  }
+}
 
-  
+/* Forum Styles */

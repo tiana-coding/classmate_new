@@ -1,12 +1,16 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home';
+import { DashboardComponent } from './dashboard/dashboard';
 import { AgendaComponent } from './agenda/agenda';
 import { LeaderboardComponent } from './leaderboard/leaderboard';
+import { ForumComponent } from './forum/forum';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'agenda', component: AgendaComponent },
   { path: 'leaderboard', component: LeaderboardComponent },
+  { path: 'forum', component: ForumComponent },
+  { path: 'dashboard', component: DashboardComponent },
   {
     path: 'auth',
     loadChildren: () =>
