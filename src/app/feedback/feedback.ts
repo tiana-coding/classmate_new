@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './feedback.html',
   styleUrls: ['./feedback.css']
 })
-export class Feedback {
+export class FeedbackComponent {
   rating = 0;
   feedbackText = '';
   submitted = false;
