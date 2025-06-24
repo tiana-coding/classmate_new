@@ -1,23 +1,33 @@
-<div class="px-4 py-3">
-  <h2>Aufgabenverwaltung</h2>
-  <div class="mb-3">
-    <label class="me-2">Klasse:</label>
-    <select [(ngModel)]="selectedClass" (change)="onClassChange()" class="form-select w-auto d-inline-block">
-      <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
-    </select>
+<div class="p-4">
+  <h2>Aufgabenübersicht</h2>
+
+  <ul>
+    <li *ngFor="let t of tasks" class="mb-2 flex items-center">
+      <input
+        type="checkbox"
+        [checked]="t.completed"
+        (change)="toggle(t)"
+        [disabled]="t.completed && t.dueDate < today"
+      />
+      <span class="mx-2" [class.line-through]="t.completed">
+        {{ t.title }} <small>({{ t.dueDate }})</small>
+      </span>
+      <a
+        *ngIf="t.documentUrl"
+        [href]="t.documentUrl"
+        target="_blank"
+        title="Dokument öffnen"
+      >📄</a>
+    </li>
+  </ul>
+
+  <hr class="my-4" />
+
+  <h3>Neue Aufgabe</h3>
+  <div class="flex space-x-2 items-center">
+    <input [(ngModel)]="newTitle" placeholder="Titel" />
+    <input [(ngModel)]="newDueDate" type="date" [min]="today" />
+    <input type="file" (change)="onFileChange($event)" />
+    <button (click)="addTask()">Hinzufügen</button>
   </div>
-
-  <app-task-stats></app-task-stats>
-
-  <app-task-list
-    [tasks]="tasks"
-    (toggleComplete)="onToggle($event)"
-    (delete)="onDelete($event)">
-  </app-task-list>
-
-  <a *ngIf="auth.isAdmin()" routerLink="upload" class="btn btn-secondary mt-4">
-    Upload / Edit Aufgaben
-  </a>
-
-  <router-outlet></router-outlet>
 </div>
