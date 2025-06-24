@@ -1,0 +1,61 @@
+.calendar-component {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Abstand für die Steuerleiste */
+.calendar-controls {
+  margin-bottom: 2rem;
+}
+
+.calendar-controls .btn-group .btn {
+  margin-right: 0.5rem;
+  min-width: 100px;
+}
+
+#refreshCalendar {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.calendar-container {
+  margin-bottom: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+::ng-deep .fc {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+::ng-deep .fc-view-harness {
+  min-height: 300px; /* oder mehr */
+}
+
+form input,
+form button {
+  height: 3rem;
+}
+
+form .form-control {
+  font-size: 1rem;
+}
+
+/* Add-Button besser sichtbar */
+button[type="submit"] {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.5rem 0;
+}
+
+.list-group-item {
+  padding: 0.75rem 1.25rem;
+}
