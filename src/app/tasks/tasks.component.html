@@ -1,33 +1,101 @@
-<div class="p-4">
-  <h2>Aufgabenübersicht</h2>
+<div style="max-width:1024px; margin:0 auto; padding:1rem;">
 
-  <ul>
-    <li *ngFor="let t of tasks" class="mb-2 flex items-center">
+  <!-- Neue Aufgabe oben -->
+  <div style="margin-bottom:2rem; color:#000;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:1rem; color:#fff;">
+      Neue Aufgabe
+    </h2>
+    <div style="display:flex; flex-wrap:wrap; gap:.75rem; align-items:center;">
       <input
-        type="checkbox"
-        [checked]="t.completed"
-        (change)="toggle(t)"
-        [disabled]="t.completed && t.dueDate < today"
+        [(ngModel)]="newAufgabenname"
+        placeholder="Aufgabenname"
+        style="flex:1 1 8rem; padding:.5rem; border:1px solid #ccc; border-radius:4px; color:#000;"
       />
-      <span class="mx-2" [class.line-through]="t.completed">
-        {{ t.title }} <small>({{ t.dueDate }})</small>
-      </span>
-      <a
-        *ngIf="t.documentUrl"
-        [href]="t.documentUrl"
-        target="_blank"
-        title="Dokument öffnen"
-      >📄</a>
-    </li>
-  </ul>
+      <input
+        [(ngModel)]="newDueDate"
+        type="date"
+        [min]="today"
+        style="flex:1 1 8rem; padding:.5rem; border:1px solid #ccc; border-radius:4px; color:#000;"
+      />
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        style="flex:1 1 12rem; padding:.5rem; border:1px solid #ccc; border-radius:4px; color:#fff;"
+      />
+      <button
+        (click)="addTask()"
+        style="background:#008080; color:#fff; border:none; padding:.6rem 1.2rem; border-radius:4px;"
+      >
+        Hinzufügen
+      </button>
+    </div>
+  </div>
 
-  <hr class="my-4" />
+  <hr style="border:none; border-top:1px solid #ccc; margin:1.5rem 0;" />
 
-  <h3>Neue Aufgabe</h3>
-  <div class="flex space-x-2 items-center">
-    <input [(ngModel)]="newTitle" placeholder="Titel" />
-    <input [(ngModel)]="newDueDate" type="date" [min]="today" />
-    <input type="file" (change)="onFileChange($event)" />
-    <button (click)="addTask()">Hinzufügen</button>
+  <!-- Liste der Tasks -->
+  <div style="display:flex; flex-direction:column; gap:1.5rem;">
+
+    <div
+      *ngFor="let t of tasks"
+      style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:6px;
+        box-shadow:0 1px 4px rgba(0,0,0,0.1);
+        padding:1rem 1.5rem;
+        text-align:left;
+        color:#000;
+        min-height:6rem;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+      "
+    >
+      <!-- Oben: Fach -->
+      <div style="font-size:1.5rem; font-weight:700; margin-bottom:.5rem;">
+        {{ t.fach }}
+      </div>
+
+      <!-- Mitte: Name & Deadline -->
+      <div>
+        <div style="font-size:1.25rem; font-weight:600;">
+          {{ t.aufgabenname }}
+        </div>
+        <div style="font-size:1rem; color:#555;">
+          <strong>Deadline:</strong> {{ t.dueDate }}
+        </div>
+      </div>
+
+      <!-- Unten: Status & Download -->
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+
+        <!-- Status Toggle -->
+        <div
+          (click)="toggle(t)"
+          style="cursor:pointer; font-size:1rem; user-select:none;"
+          [style.color]="t.completed ? 'green' : 'red'"
+        >
+          {{ t.completed ? 'Erledigt ✔' : 'Nicht erledigt ✗' }}
+        </div>
+
+        <!-- Download/Symbol -->
+        <a
+          *ngIf="t.documentUrl || t.externalUrl"
+          [href]="t.documentUrl || t.externalUrl"
+          target="_blank"
+          style="
+            font-size: 3rem;      /* Icon größer machen */
+            display: inline-block; /* für transform */
+            transform: scale(1.2); /* optional zusätzlicher Zoom */
+            color: #008080;
+            text-decoration: none;
+          "
+        >
+          📄
+        </a>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -1,7 +1,9 @@
 export interface Task {
   id: number;
-  title: string;
-  dueDate: string;       // ISO-Datum, z.B. "2025-07-01"
+  aufgabenname: string; 
+  fach: string;          
+  dueDate: string;       
   completed: boolean;
-  documentUrl?: string;  // Pfad zu hochgeladenem Dokument
+  documentUrl?: string;
+  externalUrl?: string;
 }

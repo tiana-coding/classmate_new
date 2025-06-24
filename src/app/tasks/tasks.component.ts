@@ -12,8 +12,9 @@ import { Task }              from './models/task.model';
 })
 export class TasksComponent implements OnInit {
   tasks: Task[] = [];
-  newTitle = '';
-  newDueDate = '';
+
+  newAufgabenname = '';
+  newDueDate      = '';
   selectedFile?: File;
   today = new Date().toISOString().split('T')[0];
 
@@ -25,44 +26,44 @@ export class TasksComponent implements OnInit {
 
   private load(): void {
     this.svc.getTasks().subscribe(all => {
-      const incomplete = all
+      // Offen nach Datum aufsteigend, dann Erledigte nach Datum aufsteigend
+      const open = all
         .filter(t => !t.completed)
-        // aufsteigend: ältestes Datum zuerst
         .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
-
-      const complete = all
+      const done = all
         .filter(t => t.completed)
-        // absteigend: neuestes Datum zuerst
-        .sort((a, b) => b.dueDate.localeCompare(a.dueDate));
-
-      this.tasks = [...incomplete, ...complete];
+        .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+      this.tasks = [...open, ...done];
     });
   }
 
-  toggle(t: Task): void {
-    if (t.completed && t.dueDate < this.today) return;
-    t.completed = !t.completed;
+  toggle(task: Task): void {
+    if (task.completed && task.dueDate < this.today) return;
+    task.completed = !task.completed;
     this.svc.updateTasks(this.tasks).subscribe(() => this.load());
   }
 
   onFileChange(ev: Event): void {
-    const inp = ev.target as HTMLInputElement;
-    if (inp.files?.length) this.selectedFile = inp.files[0];
+    const input = ev.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   addTask(): void {
-    const title = this.newTitle.trim();
-    const due   = this.newDueDate;
-    if (!title || !due) return;
+    const name = this.newAufgabenname.trim();
+    const due  = this.newDueDate;
+    if (!name || !due) return;
 
     const nextId = this.tasks.length
-      ? Math.max(...this.tasks.map(x => x.id)) + 1
+      ? Math.max(...this.tasks.map(t => t.id)) + 1
       : 1;
 
     const create = (path?: string) => {
       const newTask: Task = {
         id: nextId,
-        title,
+        aufgabenname: name,
+        fach: '',            // aktuell leer, kann später erweitert werden
         dueDate: due,
         completed: false,
         documentUrl: path || ''
@@ -72,13 +73,14 @@ export class TasksComponent implements OnInit {
     };
 
     if (this.selectedFile) {
-      this.svc.uploadDocument(this.selectedFile).subscribe(res => create(res.path));
+      this.svc.uploadDocument(this.selectedFile)
+        .subscribe(res => create(res.path));
     } else {
       create();
     }
 
-    this.newTitle = '';
-    this.newDueDate = '';
-    this.selectedFile = undefined;
+    this.newAufgabenname = '';
+    this.newDueDate      = '';
+    this.selectedFile    = undefined;
   }
 }
