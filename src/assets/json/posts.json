@@ -25,7 +25,7 @@
     ],
     "imageUrl": null,
     "createdAt": "2025-06-23T23:25:28.078Z",
-    "likes": 0,
+    "likes": 2,
     "comments": [
       {
         "text": "test",
@@ -36,5 +36,18 @@
         "createdAt": "2025-06-23T23:25:32.925Z"
       }
     ]
+  },
+  {
+    "id": 1750768936444,
+    "title": "Aufgabe 2",
+    "details": "Brauche hilfe",
+    "tags": [
+      "aufgabe",
+      "mathe"
+    ],
+    "imageUrl": "/assets/images/uploads/1750768936436-Screenshot 2025-06-22 150817.png",
+    "createdAt": "2025-06-24T12:42:16.444Z",
+    "likes": 0,
+    "comments": []
   }
 ]
